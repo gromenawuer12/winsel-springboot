@@ -1,12 +1,10 @@
 package com.albertocn.springboot;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Task_Types {
+@Table(name = "task_types")
+public class TaskType {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;

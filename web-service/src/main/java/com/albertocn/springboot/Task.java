@@ -1,34 +1,33 @@
 package com.albertocn.springboot;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 @Entity
-public class Tasks {
+@Table(name = "tasks")
+public class Task {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     @OneToOne()
-    @JoinColumn(name = "user_id")
-    private Users user_id;
+    @JoinColumn(name = "userId")
+    private User userId;
 
     private LocalDateTime start;
 
     private LocalTime duration;
 
     @OneToOne()
-    @JoinColumn(name = "task_type_id")
-    private Task_Types task_type_id;
+    @JoinColumn(name = "taskTypeId")
+    private TaskType taskTypeId;
 
     private String description;
 
     @OneToOne()
-    @JoinColumn(name = "weather_task_id")
-    private Weather_Tasks weather_task_id;
+    @JoinColumn(name = "weatherTaskId")
+    private WeatherTask weatherTaskId;
 
     public Integer getId() {
         return id;
@@ -38,12 +37,12 @@ public class Tasks {
         this.id = id;
     }
 
-    public Users getUser_id() {
-        return user_id;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Users user_id) {
-        this.user_id = user_id;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     public LocalDateTime getStart() {
@@ -62,12 +61,12 @@ public class Tasks {
         this.duration = duration;
     }
 
-    public Task_Types getTask_type_id() {
-        return task_type_id;
+    public TaskType getTaskTypeId() {
+        return taskTypeId;
     }
 
-    public void setTask_type_id(Task_Types task_type_id) {
-        this.task_type_id = task_type_id;
+    public void setTaskTypeId(TaskType taskTypeId) {
+        this.taskTypeId = taskTypeId;
     }
 
     public String getDescription() {
@@ -78,12 +77,12 @@ public class Tasks {
         this.description = description;
     }
 
-    public Weather_Tasks getWeather_task_id() {
-        return weather_task_id;
+    public WeatherTask getWeatherTaskId() {
+        return weatherTaskId;
     }
 
-    public void setWeather_task_id(Weather_Tasks weather_task_id) {
-        this.weather_task_id = weather_task_id;
+    public void setWeatherTaskId(WeatherTask weatherTaskId) {
+        this.weatherTaskId = weatherTaskId;
     }
 
 }

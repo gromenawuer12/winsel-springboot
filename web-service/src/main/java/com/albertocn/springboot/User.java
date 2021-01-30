@@ -1,19 +1,17 @@
 package com.albertocn.springboot;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Users {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private String name;
     private String email;
-    private LocalDateTime email_verified_at;
+    private LocalDateTime emailVerifiedAt;
     private String password;
     private String remember_token;
     private LocalDateTime created_at;
@@ -43,12 +41,12 @@ public class Users {
         this.email = email;
     }
 
-    public LocalDateTime getEmail_verified_at() {
-        return email_verified_at;
+    public LocalDateTime getEmailVerifiedAt() {
+        return emailVerifiedAt;
     }
 
-    public void setEmail_verified_at(LocalDateTime email_verified_at) {
-        this.email_verified_at = email_verified_at;
+    public void setEmailVerifiedAt(LocalDateTime emailVerifiedAt) {
+        this.emailVerifiedAt = emailVerifiedAt;
     }
 
     public String getPassword() {
