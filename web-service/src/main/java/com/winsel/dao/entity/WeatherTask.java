@@ -1,4 +1,4 @@
-package com.albertocn.springboot;
+package com.winsel.dao.entity;
 
 import javax.persistence.*;
 

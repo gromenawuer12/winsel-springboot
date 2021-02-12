@@ -1,6 +1,9 @@
-package com.albertocn.springboot;
+package com.winsel.dao;
 
+import com.winsel.dao.entity.WeatherTask;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface WeatherTaskRepository extends CrudRepository<WeatherTask, Integer> {
 }
