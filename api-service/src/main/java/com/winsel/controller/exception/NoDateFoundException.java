@@ -1,4 +1,4 @@
-package com.albertocn.springboot;
+package com.winsel.controller.exception;
 
 public class NoDateFoundException extends Exception {
     public NoDateFoundException(String errorMessage) {

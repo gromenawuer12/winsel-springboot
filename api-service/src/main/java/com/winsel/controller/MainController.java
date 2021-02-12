@@ -1,10 +1,9 @@
-package com.albertocn.springboot;
+package com.winsel.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.winsel.controller.exception.NoDateFoundException;
+import com.winsel.dto.WeatherList;
+import com.winsel.dto.WeatherResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,18 +16,10 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@SpringBootApplication
 @RequestMapping(path="/tasks")
-public class ConsumingRestApplication {
+public class MainController {
     @Value("${app.apiLink}")
     private String apiLink;
-
-    private static final Logger log = LoggerFactory.getLogger(ConsumingRestApplication.class);
-
-    public static void main(String[] args) {
-        SpringApplication.run(ConsumingRestApplication.class, args);
-    }
-
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
@@ -50,4 +41,3 @@ public class ConsumingRestApplication {
         }
     }
 }
-

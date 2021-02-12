@@ -1,4 +1,4 @@
-package com.albertocn.springboot;
+package com.winsel.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
