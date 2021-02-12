@@ -7,25 +7,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@RequestMapping(path="/tasks")
+@RestController
+@RequestMapping("/weather")
 public class MainController {
+
     @Value("${app.apiLink}")
     private String apiLink;
+
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
-    @GetMapping(path = "/weather")
-    @ResponseBody
+
+    @GetMapping
     public WeatherList run(@RequestParam(value = "localDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime, RestTemplate restTemplate) throws Exception {
 
         WeatherResponse weatherResponse = restTemplate.getForObject(apiLink, WeatherResponse.class);
