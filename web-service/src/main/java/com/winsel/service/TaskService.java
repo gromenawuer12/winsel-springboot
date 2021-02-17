@@ -40,20 +40,29 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public Iterable<Task> getFilterTasks(LocalDate from, LocalDate to, Optional<String> type) {
-        String taskType = type.orElse(null);
+    public Iterable<Task> getFilterTasks(LocalDate from, LocalDate to, String type) {
         Iterable<Task> tr = getAllTasks();
         List<Task> tasks = new ArrayList<>();
         tr.forEach((task) -> {
-            if ((task.getStart().toLocalDate().equals(from)||task.getStart().toLocalDate().isAfter(from)) &&
-                    (task.getStart().toLocalDate().equals(to)||task.getStart().toLocalDate().isBefore(to))) {
-                if(taskType!=null){
-                    if (task.getTaskTypeId().getName().equals(taskType)) tasks.add(task);
+            if(from!=null && to!=null && type!=null){
+                if ((task.getStart().toLocalDate().equals(from)||task.getStart().toLocalDate().isAfter(from)) &&
+                        (task.getStart().toLocalDate().equals(to)||task.getStart().toLocalDate().isBefore(to)) &&
+                        task.getTaskTypeId().getName().equals(type)) {
+                    tasks.add(task);
                 }
-                else {
+                }
+            else if(from!=null && to!=null){
+                if ((task.getStart().toLocalDate().equals(from)||task.getStart().toLocalDate().isAfter(from)) &&
+                        (task.getStart().toLocalDate().equals(to)||task.getStart().toLocalDate().isBefore(to))) {
                     tasks.add(task);
                 }
             }
+            else if(from==null && to==null && type!=null){
+                if (task.getTaskTypeId().getName().equals(type)) {
+                    tasks.add(task);
+                }
+            }
+
         });
         return tasks;
     }
