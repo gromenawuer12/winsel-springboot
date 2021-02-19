@@ -19,6 +19,8 @@ import java.util.Optional;
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private TaskTypeRepository taskTypeRepository;
 
     public Task addNewTask (User userId, LocalDateTime start, LocalTime duration, TaskType taskTypeId, String description, WeatherTask weatherTaskId) {
         Task t = new Task();
@@ -41,29 +43,18 @@ public class TaskService {
     }
 
     public Iterable<Task> getFilterTasks(LocalDate from, LocalDate to, String type) {
-        Iterable<Task> tr = getAllTasks();
-        List<Task> tasks = new ArrayList<>();
-        tr.forEach((task) -> {
-            if(from!=null && to!=null && type!=null){
-                if ((task.getStart().toLocalDate().equals(from)||task.getStart().toLocalDate().isAfter(from)) &&
-                        (task.getStart().toLocalDate().equals(to)||task.getStart().toLocalDate().isBefore(to)) &&
-                        task.getTaskTypeId().getName().equals(type)) {
-                    tasks.add(task);
-                }
-                }
-            else if(from!=null && to!=null){
-                if ((task.getStart().toLocalDate().equals(from)||task.getStart().toLocalDate().isAfter(from)) &&
-                        (task.getStart().toLocalDate().equals(to)||task.getStart().toLocalDate().isBefore(to))) {
-                    tasks.add(task);
-                }
-            }
-            else if(from==null && to==null && type!=null){
-                if (task.getTaskTypeId().getName().equals(type)) {
-                    tasks.add(task);
-                }
-            }
+        TaskType typeId = taskTypeRepository.findByName(type);
 
-        });
-        return tasks;
+        if (from!=null && to!=null){
+            LocalDateTime fromT = from.atStartOfDay();
+            LocalDateTime toT = to.atTime(LocalTime.MAX);
+            if(type!=null){
+                return taskRepository.findByStartBetweenAndTaskTypeId(fromT,toT,typeId);
+            }
+            else{
+                return taskRepository.findByStartBetween(fromT,toT);
+            }
+        }
+        return taskRepository.findByTaskTypeId(typeId);
     }
 }

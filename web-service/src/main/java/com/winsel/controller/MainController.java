@@ -33,10 +33,8 @@ public class MainController {
                                                          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
                                                          @RequestParam(required = false) String type) {
         if((from!=null && to!=null) || type!=null) {
-            System.out.println("hola");
             return new ResponseEntity<>(taskService.getFilterTasks(from, to, type), HttpStatus.OK);
         }
-        System.out.println("adios");
         return new ResponseEntity<>(taskService.getAllTasks(),HttpStatus.OK);
     }
 
