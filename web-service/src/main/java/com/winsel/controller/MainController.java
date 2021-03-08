@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.time.*;
 import java.util.Optional;
 
@@ -22,9 +23,9 @@ public class MainController {
     private TaskService taskService;
 
     @PostMapping(path = "/add")
-    public ResponseEntity<String> addNewTask (@RequestParam User userId, @RequestParam LocalDateTime start, @RequestParam LocalTime duration, @RequestParam TaskType taskTypeId, @RequestParam String description, @RequestParam WeatherTask weatherTaskId) {
-        Task t = taskService.addNewTask(userId,start,duration,taskTypeId,description,weatherTaskId);
-        URI uri = URI.create(taskService.getTaskById(t.getId()).toString());
+    public ResponseEntity<String> addNewTask (@RequestParam User userId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start, @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) @RequestParam LocalTime duration, @RequestParam String taskTypeName, @RequestParam String description) {
+        Task t = taskService.addNewTask(userId,start,duration,taskTypeName,description);
+        URI uri = URI.create(taskService.getTaskById(t.getId()).toString().replaceAll("(Optional\\[)|(\\])",""));
         return ResponseEntity.created(uri).build();
     }
 
