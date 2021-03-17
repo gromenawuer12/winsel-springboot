@@ -1,0 +1,2 @@
+app.apiLink={WEATHERAPILINK}
+server.port=8081
