@@ -5,31 +5,52 @@ import com.winsel.dao.entity.Task;
 import com.winsel.dao.entity.TaskType;
 import com.winsel.dao.entity.User;
 import com.winsel.dao.entity.WeatherTask;
+import com.winsel.dto.WeatherResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class TaskService {
+    @Value("${app.apiLink}")
+    private String apiLink;
     @Autowired
     private TaskRepository taskRepository;
     @Autowired
     private TaskTypeRepository taskTypeRepository;
+    @Autowired
+    private WeatherTaskRepository weatherTaskRepository;
 
-    public Task addNewTask (User userId, LocalDateTime start, LocalTime duration, TaskType taskTypeId, String description, WeatherTask weatherTaskId) {
+    public WeatherResponse weatherApi(LocalDateTime localDateTime){
+        URI targetUrl= UriComponentsBuilder.fromUriString(apiLink)
+                .path("/weather")
+                .queryParam("localDateTime", localDateTime)
+                .build()
+                .encode()
+                .toUri();
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(targetUrl, WeatherResponse.class);
+    }
+
+    public Task addNewTask (User userId, LocalDateTime start, LocalTime duration, String taskTypeName, String description) {
+        WeatherResponse weather = weatherApi(start);
+        WeatherTask weatherTask = weatherTaskRepository.findByWeather(weather.getWeatherMain().get(0).getMain());
+        TaskType taskType = taskTypeRepository.findByName(taskTypeName);
         Task t = new Task();
         t.setUserId(userId);
         t.setStart(start);
         t.setDuration(duration);
-        t.setTaskTypeId(taskTypeId);
+        t.setTaskTypeId(taskType);
         t.setDescription(description);
-        t.setWeatherTaskId(weatherTaskId);
+        t.setWeatherTaskId(weatherTask);
         t = taskRepository.save(t);
         return t;
     }
@@ -57,4 +78,5 @@ public class TaskService {
         }
         return taskRepository.findByTaskTypeId(typeId);
     }
+
 }

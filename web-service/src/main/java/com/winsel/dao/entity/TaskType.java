@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "task_types")
 public class TaskType {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String name;
 

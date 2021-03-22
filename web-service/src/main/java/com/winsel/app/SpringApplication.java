@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.winsel.controller")
 @ComponentScan(basePackages = "com.winsel.service")
+@ComponentScan(basePackages = "com.winsel.dto")
 @EnableJpaRepositories("com.winsel.dao")
 @EntityScan("com.winsel.dao.entity")
 

@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "weather_tasks")
 public class WeatherTask {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String weather;
 
