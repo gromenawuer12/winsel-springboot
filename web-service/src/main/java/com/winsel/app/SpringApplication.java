@@ -7,12 +7,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableEurekaClient
 @ComponentScan(basePackages = "com.winsel.controller")
 @ComponentScan(basePackages = "com.winsel.service")
 @ComponentScan(basePackages = "com.winsel.dto")
 @EnableJpaRepositories("com.winsel.dao")
 @EntityScan("com.winsel.dao.entity")
+@EnableEurekaClient
 
 public class SpringApplication {
 
