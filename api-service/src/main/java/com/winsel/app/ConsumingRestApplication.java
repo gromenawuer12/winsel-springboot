@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "com.winsel.controller")
 @ComponentScan(basePackages = "com.winsel.dto")
 @EnableEurekaServer
-@EnableEurekaClient
 public class ConsumingRestApplication {
 
     public static void main(String[] args) {
