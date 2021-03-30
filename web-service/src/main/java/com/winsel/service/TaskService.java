@@ -6,15 +6,10 @@ import com.winsel.dao.entity.TaskType;
 import com.winsel.dao.entity.User;
 import com.winsel.dao.entity.WeatherTask;
 import com.winsel.dto.WeatherResponse;
+import com.winsel.feign.JSONWeather;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,8 +17,6 @@ import java.util.Optional;
 
 @Service
 public class TaskService {
-    @Value("${app.apiLink}")
-    private String apiLink;
     @Autowired
     private TaskRepository taskRepository;
     @Autowired
@@ -31,25 +24,14 @@ public class TaskService {
     @Autowired
     private WeatherTaskRepository weatherTaskRepository;
     @Autowired
-    private RestTemplate restTemplate;
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
+    private JSONWeather jsonWeather;
 
-    public WeatherResponse weatherApi(LocalDateTime localDateTime){
-        URI targetUrl= UriComponentsBuilder.fromUriString(apiLink)
-                .path("/weather")
-                .queryParam("localDateTime", localDateTime)
-                .build()
-                .encode()
-                .toUri();
-        return restTemplate.getForObject(targetUrl, WeatherResponse.class);
+    public WeatherResponse weatherApi(String localDateTime){
+        return jsonWeather.getWeather(localDateTime);
     }
 
     public Task addNewTask (User userId, LocalDateTime start, LocalTime duration, String taskTypeName, String description) {
-        WeatherResponse weather = weatherApi(start);
+        WeatherResponse weather = weatherApi(start.toString());
         WeatherTask weatherTask = weatherTaskRepository.findByWeather(weather.getWeatherMain().get(0).getMain());
         TaskType taskType = taskTypeRepository.findByName(taskTypeName);
         Task t = new Task();
