@@ -5,7 +5,7 @@
 *.ipr
 
 # Spring
-src/main/resources/application.properties
+src/main/resources/application.yml
 
 # Compiled class file
 *.class

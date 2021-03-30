@@ -1,0 +1,15 @@
+app:
+  apiLink: {WEATHERAPILINK}
+spring:
+  application:
+    name: api-service
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+server:
+  port: 8761

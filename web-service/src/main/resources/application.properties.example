@@ -1,5 +1,0 @@
-spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url={JDBC}
-spring.datasource.username={USER}
-spring.datasource.password={PASSWORD}
-app.apiLink=http://localhost:8081
