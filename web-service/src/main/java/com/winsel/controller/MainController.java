@@ -1,9 +1,7 @@
 package com.winsel.controller;
 
 import com.winsel.dao.entity.Task;
-import com.winsel.dao.entity.TaskType;
 import com.winsel.dao.entity.User;
-import com.winsel.dao.entity.WeatherTask;
 import com.winsel.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.net.URLEncoder;
 import java.time.*;
 import java.util.Optional;
 

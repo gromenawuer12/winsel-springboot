@@ -8,8 +8,6 @@ spring:
     url: {JDBC}
     username: {USER}
     password: {PASSWORD}
-app:
-  apiLink: http://{API-SERVICE-NAME}
 eureka:
   client:
     registerWithEureka: true
