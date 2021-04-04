@@ -32,7 +32,7 @@ public class TaskService {
 
     public Task addNewTask (User userId, LocalDateTime start, LocalTime duration, String taskTypeName, String description) {
         WeatherResponse weather = weatherApi(start.toString());
-        WeatherTask weatherTask = weatherTaskRepository.findByWeather(weather.getWeatherMain().get(0).getMain());
+        WeatherTask weatherTask = weatherTaskRepository.findByWeather(weather.getWeatherWeather().get(0).getMain());
         TaskType taskType = taskTypeRepository.findByName(taskTypeName);
         Task t = new Task();
         t.setUserId(userId);
