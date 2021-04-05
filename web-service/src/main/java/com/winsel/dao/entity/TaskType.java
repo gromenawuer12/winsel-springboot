@@ -7,9 +7,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "task_types")
+@Getter @Setter
 public class TaskType {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Getter @Setter private Integer id;
-    @Getter @Setter private String name;
+    private Integer id;
+    private String name;
 }

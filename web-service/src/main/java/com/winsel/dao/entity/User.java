@@ -8,15 +8,16 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
+@Getter @Setter
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Getter @Setter private Integer id;
-    @Getter @Setter private String name;
-    @Getter @Setter private String email;
-    @Getter @Setter private LocalDateTime emailVerifiedAt;
-    @Getter @Setter private String password;
-    @Getter @Setter private String remember_token;
-    @Getter @Setter private LocalDateTime created_at;
-    @Getter @Setter private LocalDateTime updated_at;
+    private Integer id;
+    private String name;
+    private String email;
+    private LocalDateTime emailVerifiedAt;
+    private String password;
+    private String remember_token;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 }

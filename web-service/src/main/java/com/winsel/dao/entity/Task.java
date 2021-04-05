@@ -9,28 +9,29 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "tasks")
+@Getter @Setter
 public class Task {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Getter @Setter private Integer id;
+    private Integer id;
 
     @OneToOne()
     @JoinColumn(name = "userId")
-    @Getter @Setter private User userId;
+    private User userId;
 
-    @Getter @Setter private LocalDateTime start;
+    private LocalDateTime start;
 
-    @Getter @Setter private LocalTime duration;
+    private LocalTime duration;
 
     @OneToOne()
     @JoinColumn(name = "taskTypeId")
-    @Getter @Setter private TaskType taskTypeId;
+    private TaskType taskTypeId;
 
-    @Getter @Setter private String description;
+    private String description;
 
     @OneToOne()
     @JoinColumn(name = "weatherTaskId")
-    @Getter @Setter private WeatherTask weatherTaskId;
+    private WeatherTask weatherTaskId;
 
 
 }
