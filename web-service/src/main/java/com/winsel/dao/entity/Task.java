@@ -1,11 +1,15 @@
 package com.winsel.dao.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "tasks")
+@Getter @Setter
 public class Task {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -29,60 +33,5 @@ public class Task {
     @JoinColumn(name = "weatherTaskId")
     private WeatherTask weatherTaskId;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
-
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public LocalTime getDuration() {
-        return duration;
-    }
-
-    public void setDuration(LocalTime duration) {
-        this.duration = duration;
-    }
-
-    public TaskType getTaskTypeId() {
-        return taskTypeId;
-    }
-
-    public void setTaskTypeId(TaskType taskTypeId) {
-        this.taskTypeId = taskTypeId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public WeatherTask getWeatherTaskId() {
-        return weatherTaskId;
-    }
-
-    public void setWeatherTaskId(WeatherTask weatherTaskId) {
-        this.weatherTaskId = weatherTaskId;
-    }
 
 }

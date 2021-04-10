@@ -2,42 +2,31 @@ package com.winsel.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ToString
+@NoArgsConstructor
 public class WeatherList {
 
-    private int dt;
+    @Getter @Setter private int dt;
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    private List<WeatherMain> weatherMain;
+    @JsonProperty("weather")
+    private List<WeatherWeather> weatherWeather;
 
-    public WeatherList() {
-
+    public List<WeatherWeather> getWeather() {
+        return this.weatherWeather;
     }
 
-    public List<WeatherMain> getWeather() {
-        return this.weatherMain;
+    public void setWeather(List<WeatherWeather> weatherWeather) {
+        this.weatherWeather = weatherWeather;
     }
 
-    public void setWeather(List<WeatherMain> weatherMain) {
-        this.weatherMain = weatherMain;
-    }
-
-    public int getDt() {
-        return dt;
-    }
-
-    public void setDt(int dt) {
-        this.dt = dt;
-    }
-
-    @Override
-    public String toString() {
-        return "List{" +
-                "dt = " + dt +
-                ", weather = " + weatherMain +
-                '}';
-    }
 }
