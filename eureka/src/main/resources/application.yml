@@ -1,8 +1,6 @@
-app:
-  apiLink: {WEATHERAPILINK}
 spring:
   application:
-    name: api-service
+    name: eureka
 eureka:
   client:
     registerWithEureka: true
@@ -12,4 +10,4 @@ eureka:
   instance:
     hostname: localhost
 server:
-  port: 0
+  port: 8761
