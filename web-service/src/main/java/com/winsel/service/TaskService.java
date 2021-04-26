@@ -9,7 +9,6 @@ import com.winsel.dto.WeatherResponse;
 import com.winsel.feign.JSONWeather;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,9 +25,7 @@ public class TaskService {
     @Autowired
     private JSONWeather jsonWeather;
 
-    public WeatherResponse weatherApi(String localDateTime){
-        return jsonWeather.getWeather(localDateTime);
-    }
+    public WeatherResponse weatherApi(String localDateTime){ return jsonWeather.getWeather(localDateTime); }
 
     public Task addNewTask (User userId, LocalDateTime start, LocalTime duration, String taskTypeName, String description) {
         WeatherResponse weather = weatherApi(start.toString());
