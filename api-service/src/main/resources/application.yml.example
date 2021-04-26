@@ -6,10 +6,11 @@ spring:
 eureka:
   client:
     registerWithEureka: true
-    fetchRegistry: false
+    fetchRegistry: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka
   instance:
-    hostname: localhost
+    appname: ${spring.application.name}
+    instance-id: ${spring.application.name}:${random.uuid}
 server:
   port: 0
