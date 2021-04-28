@@ -1,0 +1,95 @@
+version: '3'
+services:
+ eureka:
+  container_name: eureka
+  build:
+   context: eureka
+   dockerfile: Dockerfile
+  ports:
+   - "8761:8761"
+  environment:
+   SPRING_APPLICATION_NAME: eureka
+   EUREKA_CLIENT_REGISTERWITHEUREKA: "true"
+   EUREKA_CLIENT_FETCHREGISTRY: "false"
+   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://localhost:8761/eureka
+   EUREKA_SERVER_ENABLESELFPRESERVATION: "false"
+   EUREKA_SERVER_EVICTIONINTERVALTIMERINMS: 1000
+  networks:
+   - spring
+ web-service:
+  container_name: web-service
+  build:
+   context: web-service
+   dockerfile: Dockerfile
+  ports:
+   - "8080:8080"
+  environment:
+   SPRING_APPLICATION_NAME: web-service
+   JPA_HIBERNATE_DDL_AUTO: update
+   SPRING_DATASOURCE_URL: jdbc:mysql://mydb:3306/winsel?autoReconnect=true&useSSL=false
+   SPRING_DATASOURCE_USERNAME: homestead
+   SPRING_DATASOURCE_PASSWORD: secret
+   EUREKA_CLIENT_REGISTERWITHEUREKA: "true"
+   EUREKA_CLIENT_FETCHREGISTRY: "true"
+   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+  depends_on:
+   - mydb
+   - eureka
+   - api-service
+   - api-service1
+  networks:
+   - spring
+ api-service:
+  container_name: api-service
+  build:
+   context: api-service
+   dockerfile: Dockerfile
+  environment:
+   APP_APILINK: http://api.openweathermap.org/data/2.5/forecast?q=Madrid&appid=${API_ID}
+   SPRING_APPLICATION_NAME: api-service
+   EUREKA_CLIENT_REGISTERWITHEUREKA: "true"
+   EUREKA_CLIENT_FETCHREGISTRY: "true"
+   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+   EUREKA_INSTANCE_APPNAME: $${spring.application.name}
+   EUREKA_INSTANCE_INSTANCE-ID: $${spring.application.name}:$${random.uuid}
+  depends_on:
+   - eureka
+  networks:
+   - spring
+ api-service1:
+  container_name: api-service1
+  build:
+   context: api-service
+   dockerfile: Dockerfile
+  environment:
+   APP_APILINK: http://api.openweathermap.org/data/2.5/forecast?q=Madrid&appid=438a4941537abe427c5dc821c9f1812e
+   SPRING_APPLICATION_NAME: api-service
+   EUREKA_CLIENT_REGISTERWITHEUREKA: "true"
+   EUREKA_CLIENT_FETCHREGISTRY: "true"
+   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka
+   EUREKA_INSTANCE_APPNAME: $${spring.application.name}
+   EUREKA_INSTANCE_INSTANCE-ID: $${spring.application.name}:$${random.uuid}
+  depends_on:
+   - eureka
+  networks:
+   - spring
+ mydb:
+  image: mysql:${MYSQL_TAG}
+  container_name: mydb
+  restart: unless-stopped
+  tty: true
+  ports:
+   - "${DB_PORT}:3306"
+  environment:
+   MYSQL_DATABASE: winsel
+   MYSQL_USER: homestead
+   MYSQL_PASSWORD: secret
+   MYSQL_ROOT_PASSWORD: secret
+   SERVICE_TAGS: dev
+   SERVICE_NAME: mysql
+  volumes:
+   - ../winsel-laravel/resources/mysql:/var/lib/mysql/
+  networks:
+   - spring
+networks:
+ spring:
