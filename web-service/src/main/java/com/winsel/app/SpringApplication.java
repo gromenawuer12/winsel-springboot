@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = "com.winsel.controller")
 @ComponentScan(basePackages = "com.winsel.service")
 @ComponentScan(basePackages = "com.winsel.dto")
+@ComponentScan(basePackages = "com.winsel.swagger")
 @EnableJpaRepositories("com.winsel.dao")
 @EntityScan("com.winsel.dao.entity")
 @EnableEurekaClient
