@@ -6,7 +6,6 @@
 
 # Spring
 src/main/resources/application.yml
-src/test/resources/*
 
 # Compiled class file
 *.class
