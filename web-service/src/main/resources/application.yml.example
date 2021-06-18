@@ -8,6 +8,13 @@ spring:
     url: {JDBC}
     username: {USER}
     password: {PASSWORD}
+  security:
+    oauth2:
+     client:
+      registration:
+        google:
+          client-id: {CLIENT-ID}
+          client-secret: {CLIENT-SERVER}
 eureka:
   client:
     registerWithEureka: true
